@@ -16,7 +16,8 @@ public class Game
     
 
     public void Start()
-    {   
+    {
+        Console.CursorVisible = false;
         Center center = new Center();        
 
         center._Center();
@@ -28,11 +29,11 @@ public class Game
         int interval = random.Next(3000, 10000);
         
         
+        
 
         Console.WriteLine("So are you ready?");
         center._Center();
         Console.WriteLine("Press any key to start.");
-        
 
         Console.ReadKey();
         Console.Clear();
@@ -44,76 +45,96 @@ public class Game
         Console.ForegroundColor = ConsoleColor.Yellow;
         Thread.Sleep(interval);
         Console.WriteLine("Get ready....");
-
-        Thread.Sleep(interval);        
-        int start = Environment.TickCount;
-        Console.Clear();
-        center._Center();        
-        Console.ForegroundColor = ConsoleColor.Green;
-        
-        Console.WriteLine("NOW");
-        Console.ReadKey();
-        int end = Environment.TickCount;
-
-        Console.Clear();
-        int centerX = Console.WindowWidth / 2;
-        int centerY = Console.WindowHeight / 2;
-        Console.SetCursorPosition(centerX - 30, centerY);
-        Console.ForegroundColor = ConsoleColor.Magenta;
-        this.result = end - start;
-        this.seconds = this.result / 1000.0;
-        Console.WriteLine($"Your respons time was: {this.result} milliseconds and {this.seconds} seconds");
-        Console.ReadKey();
-
-        Console.Clear();
-
-        Console.ForegroundColor = ConsoleColor.Gray;
-        Console.WriteLine("Do you want to save this result? Y/N");
-        string save = Console.ReadLine().ToUpper();
         
 
-        while (true)
+        Thread.Sleep(interval);
+
+        int checkInterval = 100;
+        int elapsed = 0;
+        Thread.Sleep(checkInterval);
+        elapsed += checkInterval;
+
+        if (elapsed != interval && Console.KeyAvailable)
         {
-            if (save == "Y")
-            {
-                Console.WriteLine("Do you want to add name after the result? Y/N");
-                string save1 = Console.ReadLine().ToUpper();
+            Console.Clear();
+            Console.ResetColor();
+            center.Centerr();
+            Console.WriteLine("Du tryckte för tidigt, försök igen");
+            Console.ReadLine();
+            Console.ReadLine();                       
 
-                while (true)
+        }
+        else
+        {
+            int start = Environment.TickCount;
+            Console.Clear();
+            center._Center();
+            Console.ForegroundColor = ConsoleColor.Green;
+
+            Console.WriteLine("NOW");
+            Console.ReadKey();
+            int end = Environment.TickCount;
+
+            Console.Clear();
+            int centerX = Console.WindowWidth / 2;
+            int centerY = Console.WindowHeight / 2;
+            Console.SetCursorPosition(centerX - 30, centerY);
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            this.result = end - start;
+            this.seconds = this.result / 1000.0;
+            Console.WriteLine($"Your respons time was: {this.result} milliseconds and {this.seconds} seconds");
+            Console.ReadKey();
+
+            Console.Clear();
+
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine("Do you want to save this result? Y/N");
+            string save = Console.ReadLine().ToUpper();
+
+
+            while (true)
+            {
+                if (save == "Y")
                 {
-                    if (save1 == "Y")
+                    Console.WriteLine("Do you want to add name after the result? Y/N");
+                    string save1 = Console.ReadLine().ToUpper();
+
+                    while (true)
                     {
-                        Console.Write("What is the name u want to add to the score?: ");
-                        names.Add(this.name = Console.ReadLine());                        
-                        highscores.Add(this.result);
-                        break;
+                        if (save1 == "Y")
+                        {
+                            Console.Write("What is the name u want to add to the score?: ");
+                            names.Add(this.name = Console.ReadLine());
+                            highscores.Add(this.result);
+                            break;
+                        }
+                        else if (save1 == "N")
+                        {
+                            Console.WriteLine("The result saves without name.");
+                            names.Add(this.name = Console.ReadLine());
+                            highscores.Add(this.result);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Something went wrong, try again.");
+                            save1 = Console.ReadLine().ToUpper();
+                        }
                     }
-                    else if (save1 == "N")
-                    {
-                        Console.WriteLine("The result saves without name.");
-                        names.Add(this.name = Console.ReadLine());
-                        highscores.Add(this.result);
-                        break;
-                    }                    
-                    else
-                    {
-                        Console.WriteLine("Something went wrong, try again.");                        
-                        save1 = Console.ReadLine().ToUpper();                        
-                    }
+                    break;
                 }
-                break;
+                else if (save == "N")
+                {
+                    Console.WriteLine("Your result will not save!");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Something went wrong, try again.");
+                    save = Console.ReadLine().ToUpper();
+                }
             }
-            else if (save == "N")
-            {
-                Console.WriteLine("Your result will not save!");
-                break;
-            }
-            else
-            {
-                Console.WriteLine("Something went wrong, try again.");               
-                save = Console.ReadLine().ToUpper();                
-            }
-        }       
+        }
     }
     public void _Highscore()
     {

@@ -10,4 +10,11 @@ public class Center
         Console.SetCursorPosition(centerX - 7, centerY);
 
     }
+    public void Centerr()
+    {
+        int centerX = Console.WindowWidth / 2;
+        int centerY = Console.WindowHeight / 2;
+        Console.SetCursorPosition(centerX - 17, centerY);
+
+    }
 }
